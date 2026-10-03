@@ -99,31 +99,29 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
     }
   };
 
-  const inputClass = 'w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm placeholder-slate-400 transition-all';
-
   return (
     <div className="w-full max-w-sm mx-auto">
 
       {/* Logo */}
       <div className="flex flex-col items-center gap-3 mb-8">
-        <div className="p-3 bg-slate-900 rounded-2xl shadow-lg">
-          <BetzLogo className="w-6 h-6 text-teal-400" />
+        <div className="glass-panel p-3">
+          <BetzLogo className="w-7 h-7 text-orange-400" />
         </div>
         <div className="text-center">
-          <h1 className="text-2xl font-black text-white tracking-tight">BETZ</h1>
+          <h1 className="text-3xl font-black text-white tracking-tight drop-shadow-[0_0_24px_rgba(249,115,22,0.25)]">BETZ</h1>
           <p className="text-xs text-slate-400 mt-1">Gamified Social Challenge App</p>
         </div>
       </div>
 
       {/* Card */}
-      <div className="bg-white rounded-3xl shadow-xl p-8">
+      <div className="glass-card p-8">
 
         {/* Tabs */}
-        <div className="bg-slate-100 p-1 rounded-2xl flex gap-1 mb-6">
+        <div className="bg-white/[0.06] p-1 rounded-2xl flex gap-1 mb-6">
           <button
             onClick={() => { setActiveTab('signin'); setErrorMsg(null); }}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === 'signin' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+              activeTab === 'signin' ? 'bg-white/10 text-white shadow-[0_0_20px_rgba(249,115,22,0.18)]' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             Sign In
@@ -131,7 +129,7 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
           <button
             onClick={() => { setActiveTab('signup'); setErrorMsg(null); }}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === 'signup' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+              activeTab === 'signup' ? 'bg-white/10 text-white shadow-[0_0_20px_rgba(249,115,22,0.18)]' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             Create Account
@@ -152,14 +150,14 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
               }}
               required
             />
-            {signInErrors.usernameOrEmail && <p className="text-xs text-rose-500 mt-1">{signInErrors.usernameOrEmail}</p>}
+            {signInErrors.usernameOrEmail && <p className="text-xs text-rose-400 mt-1">{signInErrors.usernameOrEmail}</p>}
 
             <div>
-              <label className="block text-xs font-semibold text-slate-500 mb-1.5">Password</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  className={`${inputClass} pr-10`}
+                  className="glass-input pr-10"
                   placeholder="Enter your password"
                   value={signInForm.password}
                   onChange={e => {
@@ -171,12 +169,12 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 p-0.5"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-              {signInErrors.password && <p className="text-xs text-rose-500 mt-1">{signInErrors.password}</p>}
+              {signInErrors.password && <p className="text-xs text-rose-400 mt-1">{signInErrors.password}</p>}
             </div>
 
             {errorMsg && <Alert type="error" message={errorMsg} />}
@@ -184,7 +182,7 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-500 hover:bg-teal-600 disabled:opacity-55 text-white rounded-xl py-2.5 text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+              className="btn-primary mt-2"
             >
               {loading ? <Spinner /> : <><Lock className="w-4 h-4" /> Sign In</>}
             </button>
@@ -205,7 +203,7 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
               }}
               required
             />
-            {signUpErrors.username && <p className="text-xs text-rose-500 mt-1">{signUpErrors.username}</p>}
+            {signUpErrors.username && <p className="text-xs text-rose-400 mt-1">{signUpErrors.username}</p>}
 
             <TextInput
               label="Email"
@@ -218,7 +216,7 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
               }}
               required
             />
-            {signUpErrors.email && <p className="text-xs text-rose-500 mt-1">{signUpErrors.email}</p>}
+            {signUpErrors.email && <p className="text-xs text-rose-400 mt-1">{signUpErrors.email}</p>}
 
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -233,7 +231,7 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
                   }}
                   required
                 />
-                {signUpErrors.password && <p className="text-xs text-rose-500 mt-1">{signUpErrors.password}</p>}
+                {signUpErrors.password && <p className="text-xs text-rose-400 mt-1">{signUpErrors.password}</p>}
               </div>
               <div>
                 <TextInput
@@ -247,7 +245,7 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
                   }}
                   required
                 />
-                {signUpErrors.confirmPassword && <p className="text-xs text-rose-500 mt-1">{signUpErrors.confirmPassword}</p>}
+                {signUpErrors.confirmPassword && <p className="text-xs text-rose-400 mt-1">{signUpErrors.confirmPassword}</p>}
               </div>
             </div>
 
@@ -256,7 +254,7 @@ export default function AuthPage({ onLogin, onRegister }: AuthPageProps) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-500 hover:bg-teal-600 disabled:opacity-55 text-white rounded-xl py-2.5 text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+              className="btn-primary mt-2"
             >
               {loading ? <Spinner /> : <><UserPlus className="w-4 h-4" /> Create Account</>}
             </button>

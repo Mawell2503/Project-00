@@ -62,12 +62,12 @@ export default function DailyCheckinBox({
 
   if (isCheckedInToday) {
     return (
-      <Card padding="sm" className="bg-emerald-50 border border-emerald-200">
+      <Card padding="sm" className="bg-emerald-500/10 border border-emerald-500/30">
         <div className="flex items-center gap-3">
-          <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
-            <p className="text-xs font-bold text-emerald-700">Checked in today!</p>
-            <p className="text-[10px] text-emerald-600">Keep it up. {streakCount} day streak.</p>
+            <p className="text-xs font-bold text-emerald-300">Checked in today!</p>
+            <p className="text-[10px] text-emerald-400/80">Keep it up. {streakCount} day streak.</p>
           </div>
         </div>
       </Card>
@@ -77,10 +77,10 @@ export default function DailyCheckinBox({
   return (
     <Card padding="sm">
       <div className="flex items-center gap-2 mb-3">
-        <Flame className="w-4 h-4 text-amber-500" />
-        <span className="text-xs font-bold text-slate-700">Day {streakCount} of streak</span>
+        <Flame className="w-4 h-4 text-amber-400" />
+        <span className="text-xs font-bold text-slate-200">Day {streakCount} of streak</span>
         {challengeMode === 'daily' && (
-          <span className="text-[9px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20">
+          <span className="text-[9px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/25">
             Daily
           </span>
         )}
@@ -107,21 +107,21 @@ export default function DailyCheckinBox({
 
         {confirmationMethod === 'photo_video' && (
           <div>
-            <label className="block text-[10px] font-semibold text-slate-500 mb-1">Photo/Video Proof (optional)</label>
+            <label className="block text-[10px] font-semibold text-slate-400 mb-1">Photo/Video Proof (optional)</label>
             <input
               type="url"
               value={mediaUrl}
               onChange={e => setMediaUrl(e.target.value)}
               placeholder="Paste image/video URL"
-              className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none transition-all"
+              className="glass-input text-xs py-2"
             />
           </div>
         )}
 
         {locationVerified && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-2 flex items-center gap-2">
-            <MapPin className="w-3 h-3 text-emerald-500" />
-            <span className="text-[10px] text-emerald-700 font-medium">Location verified</span>
+          <div className="bg-emerald-500/10 border border-emerald-500/25 rounded-lg p-2 flex items-center gap-2">
+            <MapPin className="w-3 h-3 text-emerald-400" />
+            <span className="text-[10px] text-emerald-300 font-medium">Location verified</span>
           </div>
         )}
 
@@ -131,7 +131,7 @@ export default function DailyCheckinBox({
           type="button"
           onClick={handleSubmit}
           disabled={loading || !message.trim()}
-          className="w-full py-2 rounded-xl font-bold text-white bg-teal-500 hover:bg-teal-600 transition-colors disabled:opacity-50 text-xs"
+          className="btn-primary text-xs"
         >
           {loading ? 'Submitting...' : 'Check In'}
         </button>

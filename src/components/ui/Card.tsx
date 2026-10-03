@@ -9,7 +9,7 @@ interface CardProps {
 export default function Card({ children, className = '', padding = 'md' }: CardProps) {
   const paddingMap = { sm: 'p-4', md: 'p-6', lg: 'p-8' };
   return (
-    <div className={`rounded-2xl bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl ${paddingMap[padding]} ${className}`}>
+    <div className={`glass-card ${paddingMap[padding]} ${className}`}>
       {children}
     </div>
   );

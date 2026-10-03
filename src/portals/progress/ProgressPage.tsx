@@ -12,9 +12,9 @@ interface ProgressPageProps {
 }
 
 const statusConfig: Record<string, { icon: typeof Target; color: string; bg: string; label: string }> = {
-  ACTIVE: { icon: Target, color: 'text-teal-500', bg: 'bg-teal-500/10 border-teal-500/20', label: 'In Progress' },
-  COMPLETED: { icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10 border-emerald-500/20', label: 'Completed' },
-  FAILED: { icon: XCircle, color: 'text-rose-500', bg: 'bg-rose-500/10 border-rose-500/20', label: 'Failed' },
+  ACTIVE: { icon: Target, color: 'text-orange-300', bg: 'bg-orange-500/15 border-orange-500/30', label: 'In Progress' },
+  COMPLETED: { icon: CheckCircle2, color: 'text-emerald-300', bg: 'bg-emerald-500/15 border-emerald-500/30', label: 'Completed' },
+  FAILED: { icon: XCircle, color: 'text-rose-300', bg: 'bg-rose-500/15 border-rose-500/30', label: 'Failed' },
 };
 
 export default function ProgressPage({ userChallenges, challenges, onChallengeClick }: ProgressPageProps) {
@@ -25,7 +25,7 @@ export default function ProgressPage({ userChallenges, challenges, onChallengeCl
     <div className="space-y-4">
       <div>
         <SectionLabel title="Progress" subtitle="Track your challenge journey" />
-        <h2 className="mt-1 text-2xl font-bold text-slate-900">My Challenges</h2>
+        <h2 className="mt-1 text-2xl font-bold text-white">My Challenges</h2>
       </div>
 
       <div className="space-y-3">
@@ -45,11 +45,11 @@ export default function ProgressPage({ userChallenges, challenges, onChallengeCl
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-bold text-slate-900 truncate">
+                      <h3 className="text-sm font-bold text-white truncate">
                         {challenge?.title || 'Unknown Challenge'}
                       </h3>
                       {challenge?.challenge_mode === 'daily' && (
-                        <Flame className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                        <Flame className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                       )}
                     </div>
                     <div className="flex items-center gap-2 mt-1">
@@ -64,14 +64,14 @@ export default function ProgressPage({ userChallenges, challenges, onChallengeCl
                     </div>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="text-lg font-extrabold text-slate-900">{uc.progress}%</span>
+                    <span className="text-lg font-extrabold text-white">{uc.progress}%</span>
                   </div>
                 </div>
 
                 <div className="mt-3">
                   <ProgressBar
                     value={uc.progress}
-                    color={uc.status === 'COMPLETED' ? 'emerald' : uc.status === 'FAILED' ? 'rose' : 'teal'}
+                    color={uc.status === 'COMPLETED' ? 'emerald' : uc.status === 'FAILED' ? 'rose' : 'orange'}
                     size="md"
                   />
                 </div>
@@ -79,7 +79,7 @@ export default function ProgressPage({ userChallenges, challenges, onChallengeCl
                 {challenge && (
                   <div className="mt-2 flex items-center justify-between text-[10px] text-slate-400">
                     <span>{challenge.category}</span>
-                    <span className="text-teal-500 font-bold">{challenge.reward_xp} XP</span>
+                    <span className="text-orange-400 font-bold">{challenge.reward_xp} XP</span>
                   </div>
                 )}
               </Card>
@@ -89,8 +89,8 @@ export default function ProgressPage({ userChallenges, challenges, onChallengeCl
 
         {displayUserChallenges.length === 0 && (
           <Card className="p-8 text-center">
-            <Target className="w-8 h-8 text-slate-300 mx-auto" />
-            <p className="mt-3 text-sm text-slate-500">No challenges yet. Tap + to create one!</p>
+            <Target className="w-8 h-8 text-slate-500 mx-auto" />
+            <p className="mt-3 text-sm text-slate-400">No challenges yet. Tap + to create one!</p>
           </Card>
         )}
       </div>

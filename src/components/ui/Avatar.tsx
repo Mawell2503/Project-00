@@ -13,7 +13,7 @@ const sizeMap = {
 
 export default function Avatar({ username, size = 'sm', className = '', imageUrl }: AvatarProps) {
   return (
-    <div className={`${sizeMap[size]} bg-teal-500 rounded-full text-white font-extrabold flex items-center justify-center uppercase shrink-0 overflow-hidden ${className}`}>
+    <div className={`${sizeMap[size]} bg-gradient-to-br from-orange-400 to-orange-600 rounded-full text-white font-extrabold flex items-center justify-center uppercase shrink-0 overflow-hidden shadow-[0_4px_16px_rgba(249,115,22,0.35)] ${className}`}>
       {imageUrl ? (
         <img src={imageUrl} alt={username} className="h-full w-full object-cover" />
       ) : (

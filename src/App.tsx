@@ -54,7 +54,7 @@ export default function App() {
 
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
   const [challengeFilter, setChallengeFilter] = useState<'all' | 'ACTIVE' | 'COMPLETED' | 'FAILED'>('all');
-  
+
   const [profileForm, setProfileForm] = useState<ProfileFormState>({
     bio: '',
     fullName: '',
@@ -62,7 +62,7 @@ export default function App() {
     interests: '',
     avatarUrl: '',
   });
-  
+
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileUploading, setProfileUploading] = useState(false);
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
@@ -433,7 +433,7 @@ export default function App() {
       },
       body: JSON.stringify({
         text_proof: message,
-        message,
+        message: message,
         media_url: mediaUrl,
         location_lat: lat,
         location_lng: lng,
@@ -452,9 +452,13 @@ export default function App() {
   };
 
   const handleJoinChallenge = async (challengeId: string) => {
+    if (!token) return;
     const res = await fetch(`/api/challenges/${challengeId}/join`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
     });
     const data = await res.json();
     if (!res.ok) {
@@ -487,13 +491,13 @@ export default function App() {
     <div
       className="min-h-screen font-sans antialiased flex flex-col justify-between text-slate-100"
       style={{
-        backgroundImage: "linear-gradient(135deg, rgba(2,6,23,0.86), rgba(15,23,42,0.72)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
+        background:
+          'radial-gradient(1100px 520px at 50% -12%, rgba(249,115,22,0.20), transparent 60%),' +
+          'radial-gradient(700px 480px at 108% 38%, rgba(249,115,22,0.12), transparent 55%),' +
+          'radial-gradient(700px 480px at -8% 88%, rgba(190,18,60,0.14), transparent 55%),' +
+          'linear-gradient(160deg, #0a0a0f 0%, #141219 55%, #0b0b10 100%)',
       }}
     >
-
       <main className="flex-1 w-full px-4 py-6 flex flex-col justify-center items-center">
         {!currentUser ? (
           <div className="w-full py-4 animate-fade-in">
@@ -513,7 +517,7 @@ export default function App() {
               />
             ) : (
               <>
-                {activeTab === 1 && <LobbyPage challenges={challenges} onChallengeClick={handleChallengeClick} />}
+                {activeTab === 1 && <LobbyPage challenges={challenges} userChallenges={userChallenges} onChallengeClick={handleChallengeClick} onJoin={handleJoinChallenge} />}
                 {activeTab === 2 && <FriendsPage />}
                 {activeTab === 4 && (
                   <ProgressPage
@@ -526,7 +530,7 @@ export default function App() {
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <Avatar username={currentUser.username} size="md" className="ring-2 ring-teal-400" />
+                        <Avatar username={currentUser.username} size="md" className="ring-2 ring-orange-400" />
                         <div>
                           <h2 className="text-xl font-bold text-slate-100">{currentUser.username.charAt(0).toUpperCase() + currentUser.username.slice(1)}</h2>
                           <p className="text-sm text-slate-400">@{currentUser.username}</p>
@@ -542,15 +546,15 @@ export default function App() {
                         <div className="relative">
                           <button
                             onClick={() => setShowSettingsMenu(!showSettingsMenu)}
-                            className="p-2 rounded-lg hover:bg-slate-700 transition-colors"
+                            className="p-2 rounded-lg hover:bg-white/[0.06] transition-colors"
                           >
                             <MoreVertical className="w-5 h-5 text-slate-400" />
                           </button>
                           {showSettingsMenu && (
-                            <div className="absolute right-0 top-full mt-1 w-40 bg-slate-800 border border-slate-700 rounded-xl shadow-lg z-50 overflow-hidden">
+                            <div className="absolute right-0 top-full mt-1 w-40 rounded-xl shadow-2xl z-50 overflow-hidden" style={{ background: 'rgba(20,19,26,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(16px)' }}>
                               <button
                                 onClick={() => { setShowSettingsMenu(false); handleLogout(); }}
-                                className="w-full px-4 py-3 text-left text-sm font-medium text-rose-400 hover:bg-slate-700 transition-colors"
+                                className="w-full px-4 py-3 text-left text-sm font-medium text-rose-400 hover:bg-white/[0.06] transition-colors"
                               >
                                 Sign Out
                               </button>
@@ -559,16 +563,15 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-
                     <Card>
                       <div className="flex items-center justify-between">
                         <SectionLabel title="Profile" />
                         {!profileEditing && (
                           <button
                             onClick={() => { setProfileMessage(null); setProfileEditing(true); }}
-                            className="flex items-center gap-1.5 rounded-lg border border-slate-600 px-3 py-1.5 text-xs font-semibold text-slate-300 transition-colors hover:border-teal-500 hover:text-teal-400"
+                            className="btn-secondary"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
                             Edit Profile
                           </button>
                         )}
@@ -578,7 +581,7 @@ export default function App() {
                       {!profileEditing && (
                         <div className="mt-4 space-y-4">
                           <div className="flex items-center gap-4 min-w-0">
-                            <Avatar username={currentUser.username} size="md" className="ring-2 ring-teal-400 shrink-0" imageUrl={currentUser.avatar_url} />
+                            <Avatar username={currentUser.username} size="md" className="ring-2 ring-orange-400 shrink-0" imageUrl={currentUser.avatar_url} />
                             <div className="min-w-0 flex-1">
                               <p className="text-sm font-semibold text-slate-100 truncate">{currentUser.full_name || currentUser.username}</p>
                               <p className="text-xs text-slate-100 truncate">{currentUser.email}</p>
@@ -593,7 +596,7 @@ export default function App() {
                           {currentUser.interests && (
                             <div className="flex flex-wrap gap-2">
                               {currentUser.interests.split(',').map((tag) => tag.trim()).filter(Boolean).map((tag) => (
-                                <span key={tag} className="rounded-full bg-slate-700/80 px-2.5 py-0.5 text-xs font-medium text-slate-100">{tag}</span>
+                                <span key={tag} className="rounded-full bg-white/[0.06] border border-white/[0.1] px-2.5 py-0.5 text-xs font-medium text-slate-200">{tag}</span>
                               ))}
                             </div>
                           )}
@@ -607,8 +610,8 @@ export default function App() {
                       {profileEditing && (
                         <div className="mt-4 space-y-3">
                           <div className="flex items-center gap-3">
-                            <Avatar username={currentUser.username} size="md" className="ring-2 ring-teal-400" imageUrl={profileForm.avatarUrl || currentUser.avatar_url} />
-                            <label className="cursor-pointer rounded-xl border border-dashed border-slate-600 px-3 py-2 text-xs font-semibold text-slate-300 hover:border-teal-500 hover:text-white">
+                            <Avatar username={currentUser.username} size="md" className="ring-2 ring-orange-400" imageUrl={profileForm.avatarUrl || currentUser.avatar_url} />
+                            <label className="cursor-pointer rounded-xl border border-dashed border-white/[0.2] px-3 py-2 text-xs font-semibold text-slate-300 hover:border-orange-500/60 hover:text-white">
                               <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
                               {profileUploading ? 'Uploading...' : 'Upload avatar'}
                             </label>
@@ -620,7 +623,7 @@ export default function App() {
                                 value={profileForm.fullName}
                                 onChange={(e) => { profileDirtyRef.current = true; setProfileForm((prev) => ({ ...prev, fullName: e.target.value })); }}
                                 placeholder="Full name"
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800/70 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="glass-input"
                               />
                             </div>
                             <div>
@@ -629,7 +632,7 @@ export default function App() {
                                 value={profileForm.location}
                                 onChange={(e) => { profileDirtyRef.current = true; setProfileForm((prev) => ({ ...prev, location: e.target.value })); }}
                                 placeholder="Location"
-                                className="w-full rounded-xl border border-slate-700 bg-slate-800/70 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                className="glass-input"
                               />
                             </div>
                           </div>
@@ -639,7 +642,7 @@ export default function App() {
                               value={profileForm.interests}
                               onChange={(e) => { profileDirtyRef.current = true; setProfileForm((prev) => ({ ...prev, interests: e.target.value })); }}
                               placeholder="Interests (e.g. fitness, gaming, reading)"
-                              className="w-full rounded-xl border border-slate-700 bg-slate-800/70 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                              className="glass-input"
                             />
                           </div>
                           <div>
@@ -648,7 +651,7 @@ export default function App() {
                               value={profileForm.bio}
                               onChange={(e) => { profileDirtyRef.current = true; setProfileForm((prev) => ({ ...prev, bio: e.target.value })); }}
                               placeholder="Share a little about yourself and your goals..."
-                              className="w-full min-h-24 rounded-xl border border-slate-700 bg-slate-800/70 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                              className="glass-input resize-none"
                             />
                           </div>
                           {profileMessage && (
@@ -660,14 +663,14 @@ export default function App() {
                             <button
                               onClick={handleCancelEditProfile}
                               disabled={profileSaving}
-                              className="flex-1 rounded-xl border border-slate-600 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:bg-slate-700 disabled:opacity-60"
+                              className="btn-secondary flex-1 py-2 disabled:opacity-60"
                             >
                               Cancel
                             </button>
                             <button
                               onClick={handleSaveProfile}
                               disabled={profileSaving}
-                              className="flex-1 rounded-xl bg-teal-500 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-600 disabled:opacity-60"
+                              className="btn-primary flex-1 py-2 disabled:opacity-60"
                             >
                               {profileSaving ? 'Saving...' : 'Save'}
                             </button>
@@ -691,11 +694,7 @@ export default function App() {
                           <button
                             key={filter}
                             onClick={() => setChallengeFilter(filter)}
-                            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                              challengeFilter === filter
-                                ? 'bg-teal-500 text-white'
-                                : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                            }`}
+                            className={`chip ${challengeFilter === filter ? 'chip-active' : ''}`}
                           >
                             {filter === 'all' ? 'All' : filter.charAt(0) + filter.slice(1).toLowerCase()}
                           </button>
@@ -722,7 +721,7 @@ export default function App() {
                               if (!ch) return null;
 
                               const statusConfig: Record<'ACTIVE' | 'COMPLETED' | 'FAILED', { icon: React.ComponentType<any>; color: string; bg: string }> = {
-                                ACTIVE: { icon: Flame, color: 'text-blue-400', bg: 'bg-blue-500/20' },
+                                ACTIVE: { icon: Flame, color: 'text-orange-400', bg: 'bg-orange-500/20' },
                                 COMPLETED: { icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-500/20' },
                                 FAILED: { icon: XCircle, color: 'text-rose-400', bg: 'bg-rose-500/20' },
                               };
@@ -736,7 +735,7 @@ export default function App() {
                               };
 
                               return (
-                                <div key={uc.id} className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/50">
+                                <div key={uc.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
                                   <div className={`p-2 rounded-lg ${cfg.bg}`}>
                                     <StatusIcon className={`w-4 h-4 ${cfg.color}`} />
                                   </div>
@@ -748,9 +747,9 @@ export default function App() {
                                       </span>
                                     </div>
                                     <div className="mt-1.5">
-                                      <div className="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
+                                      <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
                                         <div
-                                          className="h-full bg-teal-400 rounded-full transition-all duration-300"
+                                          className="h-full bg-orange-400 rounded-full transition-all duration-300"
                                           style={{ width: `${uc.progress}%` }}
                                         />
                                       </div>
@@ -807,7 +806,7 @@ export default function App() {
       </main>
 
       {currentUser && (
-        <nav className="sticky bottom-0 z-40 bg-slate-900 border-t border-slate-800 px-2 py-2 flex items-center justify-around">
+        <nav className="sticky bottom-0 z-40 px-2 py-2 flex items-center justify-around" style={{ background: 'rgba(12,12,18,0.75)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
           <NavButton icon={Home} label="Home" isActive={activeTab === 1 && !selectedChallengeId} onClick={() => { setActiveTab(1); setSelectedChallengeId(null); }} />
           <NavButton icon={Users} label="Friends" isActive={activeTab === 2 && !selectedChallengeId} onClick={() => { setActiveTab(2); setSelectedChallengeId(null); }} />
           <NavButton icon={Plus} label="Add" isActive={false} onClick={() => currentUser && setShowTypeSelector(true)} large />
@@ -815,7 +814,6 @@ export default function App() {
           <NavButton icon={UserIcon} label="Profile" isActive={activeTab === 5 && !selectedChallengeId} onClick={() => { setActiveTab(5); setSelectedChallengeId(null); }} />
         </nav>
       )}
-
     </div>
   );
 }

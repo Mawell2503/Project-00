@@ -87,11 +87,10 @@ export default function BetAgainstFriendWizard({ isOpen, onClose, onSubmit }: Be
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-amber-500 flex flex-col max-h-[85vh]">
+    <div className="modal-backdrop">
+      <div className="modal-shell" style={{ borderColor: 'rgba(249,115,22,0.2)' }}>
 
-        {/* Header */}
-        <div className="bg-gradient-to-r from-amber-400 to-amber-500 px-5 py-3 flex items-center justify-between shrink-0">
+        <div className="modal-header">
           <div className="flex items-center gap-3">
             {step > 0 && (
               <button onClick={handleBack} className="text-white hover:opacity-70">
@@ -100,21 +99,17 @@ export default function BetAgainstFriendWizard({ isOpen, onClose, onSubmit }: Be
             )}
             <h3 className="font-bold text-white text-lg">Bet Against a Friend</h3>
           </div>
-          <button onClick={handleClose} className="text-white hover:opacity-70 font-bold text-xl">&times;</button>
+          <button onClick={handleClose} className="modal-close-btn">&times;</button>
         </div>
 
-        {/* Step indicator */}
         <div className="px-5 py-3 flex items-center justify-center gap-2 shrink-0">
           {STEPS.map((s, i) => (
-            <div key={s} className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full transition-all ${
-                i < step ? 'bg-amber-500' : i === step ? 'bg-amber-500 scale-125' : 'bg-slate-200'
-              }`} />
-            </div>
+            <div key={s} className={`w-2 h-2 rounded-full transition-all ${
+              i < step ? 'bg-orange-500' : i === step ? 'bg-orange-500 scale-125' : 'bg-white/[0.12]'
+            }`} />
           ))}
         </div>
 
-        {/* Step content */}
         <div className="px-5 pb-4 flex-1 overflow-y-auto">
           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3">
             Step {step + 1} of {TOTAL_STEPS}: {STEPS[step]}
@@ -159,21 +154,21 @@ export default function BetAgainstFriendWizard({ isOpen, onClose, onSubmit }: Be
 
           {step === 4 && (
             <div className="space-y-3">
-              <p className="text-xs text-slate-600 font-medium">How will you keep track?</p>
+              <p className="text-xs text-slate-300 font-medium">How will you keep track?</p>
               <button
                 type="button"
                 onClick={() => setConfirmationMethod('photo_video')}
                 className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                   confirmationMethod === 'photo_video'
-                    ? 'border-amber-500 bg-amber-50'
-                    : 'border-slate-200 hover:border-slate-300'
+                    ? 'border-orange-500/70 bg-orange-500/10'
+                    : 'border-white/[0.12] hover:border-white/[0.2] bg-white/[0.04]'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Camera className={`w-5 h-5 ${confirmationMethod === 'photo_video' ? 'text-amber-500' : 'text-slate-400'}`} />
+                  <Camera className={`w-5 h-5 ${confirmationMethod === 'photo_video' ? 'text-orange-400' : 'text-slate-400'}`} />
                   <div>
-                    <p className="text-xs font-bold text-slate-900">Photo / Video</p>
-                    <p className="text-[10px] text-slate-500">Both parties upload proof at the agreed time.</p>
+                    <p className="text-xs font-bold text-white">Photo / Video</p>
+                    <p className="text-[10px] text-slate-400">Both parties upload proof at the agreed time.</p>
                   </div>
                 </div>
               </button>
@@ -182,31 +177,30 @@ export default function BetAgainstFriendWizard({ isOpen, onClose, onSubmit }: Be
                 onClick={() => setConfirmationMethod('location')}
                 className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                   confirmationMethod === 'location'
-                    ? 'border-amber-500 bg-amber-50'
-                    : 'border-slate-200 hover:border-slate-300'
+                    ? 'border-orange-500/70 bg-orange-500/10'
+                    : 'border-white/[0.12] hover:border-white/[0.2] bg-white/[0.04]'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <MapPin className={`w-5 h-5 ${confirmationMethod === 'location' ? 'text-amber-500' : 'text-slate-400'}`} />
+                  <MapPin className={`w-5 h-5 ${confirmationMethod === 'location' ? 'text-orange-400' : 'text-slate-400'}`} />
                   <div>
-                    <p className="text-xs font-bold text-slate-900">Location Check-in</p>
-                    <p className="text-[10px] text-slate-500">App verifies you're at the target location (GPS).</p>
+                    <p className="text-xs font-bold text-white">Location Check-in</p>
+                    <p className="text-[10px] text-slate-400">App verifies you're at the target location (GPS).</p>
                   </div>
                 </div>
               </button>
             </div>
           )}
 
-          {error && <p className="text-xs text-rose-500 font-medium mt-2">{error}</p>}
+          {error && <p className="text-xs text-rose-400 font-medium mt-2">{error}</p>}
         </div>
 
-        {/* Footer */}
-        <div className="px-5 py-3 border-t border-slate-100 shrink-0">
+        <div className="px-5 py-3 border-t border-white/[0.08] shrink-0">
           {step < TOTAL_STEPS - 1 ? (
             <button
               onClick={handleNext}
               disabled={!canNext()}
-              className="w-full py-2.5 rounded-xl font-bold text-white bg-amber-500 hover:bg-amber-600 transition-colors disabled:opacity-40 text-sm"
+              className="btn-primary"
             >
               Next
             </button>
@@ -214,7 +208,7 @@ export default function BetAgainstFriendWizard({ isOpen, onClose, onSubmit }: Be
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="w-full py-2.5 rounded-xl font-bold text-white bg-amber-500 hover:bg-amber-600 transition-colors disabled:opacity-50 text-sm"
+              className="btn-primary"
             >
               {loading ? 'Creating...' : `Challenge ${selectedFriend?.username || 'Friend'}`}
             </button>

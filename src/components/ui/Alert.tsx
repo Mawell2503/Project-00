@@ -6,8 +6,8 @@ interface AlertProps {
 }
 
 const styles = {
-  error: 'bg-rose-500/5 border-rose-500/10 text-rose-600',
-  success: 'bg-emerald-500/5 border-emerald-500/10 text-emerald-600',
+  error: 'bg-rose-500/10 border-rose-500/25 text-rose-300',
+  success: 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
 };
 
 const icons = {

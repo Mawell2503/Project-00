@@ -1,48 +1,292 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════════════════════
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #0a0a0f;
+    color: #e2e8f0;
+  }
+
+  ::selection {
+    background: rgba(249, 115, 22, 0.35);
+    color: #fff;
+  }
+
+  input,
+  textarea {
+    color-scheme: dark;
+  }
+}
+
+@layer components {
+  /* ── Glass surface (main card) ─────────────────────────── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    border-radius: 1.5rem;
+  }
+
+  /* ── Glass panel (nested stat/tile boxes) ──────────────── */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.85rem;
+  }
+
+  /* ── Glass input ───────────────────────────────────────── */
+  .glass-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.75rem;
+    padding: 0.625rem 0.9rem;
+    font-size: 0.875rem;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .glass-input::placeholder {
+    color: rgba(148, 163, 184, 0.6);
+  }
+
+  .glass-input:focus {
+    border-color: rgba(249, 115, 22, 0.6);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* ── Primary orange button ─────────────────────────────── */
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #fff;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.25);
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: saturate(0.4);
+  }
+
+  /* ── Secondary dark button ─────────────────────────────── */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* ── Filter chip ───────────────────────────────────────── */
+  .chip {
+    padding: 0.3rem 0.8rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .chip-active {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3);
+  }
+
+  /* ── Modal backdrop + shell ────────────────────────────── */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(2, 6, 23, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: fade-in 0.2s ease-out;
+  }
+
+  .modal-shell {
+    width: 100%;
+    max-width: 24rem;
+    background: rgba(17, 16, 20, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.16), rgba(234, 88, 12, 0.06));
+    flex-shrink: 0;
+  }
+
+  .modal-header .modal-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #fff;
+  }
+
+  .modal-close {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 700;
+    font-size: 1.25rem;
+    transition: opacity 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .modal-close:hover {
+    opacity: 1;
+    color: #fff;
+  }
+
+  .modal-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.7);
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+
+  .modal-close-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
    BRAND PALETTE — single source of truth for all colors
-   ═══════════════════════════════════════════════════════════ */
+   ════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ── Teal palette — base: #045D5D ─────────────────────── */
-  --color-teal-50:  #e8f5f5;
-  --color-teal-100: #c5e6e6;
-  --color-teal-200: #9fd5d5;
-  --color-teal-300: #6fbfbd;
-  --color-teal-400: #3aa5a3;
-  --color-teal-500: #045D5D;
-  --color-teal-600: #045151;
-  --color-teal-700: #034242;
-  --color-teal-800: #023333;
-  --color-teal-900: #012424;
-  --color-teal-950: #001515;
+  /* ── Black scale — base: #000000 ─────────────────────── */
+  --color-black-50:  #f9fafb;
+  --color-black-100: #f3f4f6;
+  --color-black-200: #e5e7eb;
+  --color-black-300: #d1d5db;
+  --color-black-400: #9ca3af;
+  --color-black-500: #6b7280;
+  --color-black-600: #4b5563;
+  --color-black-700: #374151;
+  --color-black-800: #1f2937;
+  --color-black-900: #111827;
+  --color-black-950: #030712;
 
-  /* ── Navy palette — base: #000080 ─────────────────────── */
-  --color-navy-50:  #e6e6f2;
-  --color-navy-100: #c0c0e0;
-  --color-navy-200: #9a9ace;
-  --color-navy-300: #7474bc;
-  --color-navy-400: #4e4eaa;
-  --color-navy-500: #000080;
-  --color-navy-600: #000073;
-  --color-navy-700: #000060;
-  --color-navy-800: #00004d;
-  --color-navy-900: #00003a;
-  --color-navy-950: #000027;
+  /* ── Dark Orange scale — base: #ea580c ────────────────── */
+  --color-orange-50:  #fff7ed;
+  --color-orange-100: #ffedd5;
+  --color-orange-200: #fed7aa;
+  --color-orange-300: #fdba74;
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
+  --color-orange-800: #9a3412;
+  --color-orange-900: #7c2d12;
+  --color-orange-950: #431407;
 
   /* ── Animations ────────────────────────────────────────── */
   --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-slide-out-left: slide-out-left 0.2s ease-out forwards;
+  --animate-slide-out-right: slide-out-right 0.2s ease-out forwards;
+  --animate-spring-back: spring-back 0.2s ease-out forwards;
+  --animate-modal-pop: modal-pop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Fade in animation */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ═══════════════════════════════════════════════════════════
+/* Modal pop-in */
+@keyframes modal-pop {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Slide out left */
+@keyframes slide-out-left {
+  to { transform: translateX(-100%); opacity: 0; }
+}
+
+/* Slide out right */
+@keyframes slide-out-right {
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Spring back to center */
+@keyframes spring-back {
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ════════════════════════════════════════════════════════════
    UTILITY OVERRIDES
-   ═══════════════════════════════════════════════════════════ */
+   ════════════════════════════════════════════════════════════ */
 
 /* Hide scrollbars while maintaining scroll */
 #root::-webkit-scrollbar {

@@ -25,14 +25,14 @@ export default function FriendPicker({ selectedFriendId, onSelect }: FriendPicke
   if (friends.length === 0) {
     return (
       <div className="text-center py-4">
-        <p className="text-xs text-slate-500">Add friends first!</p>
+        <p className="text-xs text-slate-400">Add friends first!</p>
       </div>
     );
   }
 
   return (
     <div>
-      <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Pick your opponent</p>
+      <p className="text-xs font-bold text-orange-400/90 uppercase tracking-wider mb-3">Pick your opponent</p>
 
       <div className="relative mb-3">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -41,7 +41,7 @@ export default function FriendPicker({ selectedFriendId, onSelect }: FriendPicke
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search friends..."
-          className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+          className="glass-input pl-9"
         />
       </div>
 
@@ -60,14 +60,14 @@ export default function FriendPicker({ selectedFriendId, onSelect }: FriendPicke
                 onClick={() => onSelect(friend)}
                 className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left ${
                   isSelected
-                    ? 'border-2 border-amber-400 bg-amber-50'
-                    : 'border-2 border-transparent bg-slate-100 hover:bg-slate-200'
+                    ? 'border-2 border-orange-500/60 bg-orange-500/10'
+                    : 'border-2 border-transparent bg-white/[0.04] hover:bg-white/[0.08]'
                 }`}
               >
                 <Avatar username={friend.username} size="md" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">{friend.username}</p>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-sm font-semibold text-white truncate">{friend.username}</p>
+                  <p className="text-[11px] text-slate-400">
                     {activeCount > 0 ? `${activeCount} active` : 'No active challenges'}
                   </p>
                 </div>

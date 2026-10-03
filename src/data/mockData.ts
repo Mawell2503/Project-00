@@ -8,8 +8,8 @@ interface Friend {
 }
 
 export const MOCK_CHALLENGES: Challenge[] = [
-  { id: '1', title: '10k Morning Run', description: 'Run 10 kilometers every morning before 8am for 30 days straight.', category: 'fitness', creator_id: '1', creator_username: 'yannick', reward_xp: 200, participants_count: 12, duration_days: 30, created_at: new Date().toISOString(), challenge_type: 'local', challenge_mode: 'daily' },
-  { id: '2', title: 'Cold Shower Streak', description: 'End every shower with 2 minutes of cold water. No exceptions.', category: 'fitness', creator_id: '2', creator_username: 'ryan', reward_xp: 100, participants_count: 8, duration_days: 21, created_at: new Date().toISOString(), challenge_type: 'local', challenge_mode: 'daily' },
+  { id: '1', title: '10k Morning Run', description: 'Run 10 kilometers every morning before 8am for 30 days straight.', category: 'fitness', creator_id: '1', creator_username: 'yannick', reward_xp: 200, participants_count: 12, duration_days: 30, created_at: new Date().toISOString(), challenge_type: 'local', challenge_mode: 'daily', media_url: '/uploads/challenge-1784187418125-39gh6v.mp4' },
+  { id: '2', title: 'Cold Shower Streak', description: 'End every shower with 2 minutes of cold water. No exceptions.', category: 'fitness', creator_id: '2', creator_username: 'ryan', reward_xp: 100, participants_count: 8, duration_days: 21, created_at: new Date().toISOString(), challenge_type: 'local', challenge_mode: 'daily', media_url: '/uploads/challenge-1784188414909-ml5bdq.png' },
   { id: '3', title: 'Read 20 Pages Daily', description: 'Read at least 20 pages of a non-fiction book every day.', category: 'productivity', creator_id: '3', creator_username: 'nathanael', reward_xp: 150, participants_count: 15, duration_days: 30, created_at: new Date().toISOString(), challenge_type: 'local', challenge_mode: 'daily' },
   { id: '4', title: 'No Social Media Before Noon', description: 'Stay off all social media platforms until 12:00 PM every day.', category: 'productivity', creator_id: '1', creator_username: 'yannick', reward_xp: 120, participants_count: 20, duration_days: 14, created_at: new Date().toISOString(), challenge_type: 'local', challenge_mode: 'normal' },
   { id: '5', title: 'Meal Prep Sundays', description: 'Prepare all meals for the upcoming week every Sunday evening.', category: 'fitness', creator_id: '2', creator_username: 'ryan', reward_xp: 180, participants_count: 6, duration_days: 30, created_at: new Date().toISOString(), challenge_type: 'friend', confirmation_method: 'photo_video', friend_id: '3', friend_username: 'nathanael', stake_description: 'Loser cooks for the winner for a week' },
@@ -65,13 +65,13 @@ export const MOCK_FRIENDS: Friend[] = [
 ];
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  fitness: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-  social: 'bg-navy-500/10 text-navy-500 border-navy-500/20',
-  productivity: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
+  fitness: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30',
+  social: 'bg-orange-500/10 text-orange-300 border-orange-500/30',
+  productivity: 'bg-amber-500/10 text-amber-300 border-amber-500/30',
 };
 
 export const FRIEND_STATUS_COLORS: Record<string, string> = {
-  ACTIVE: 'text-teal-500',
-  COMPLETED: 'text-emerald-500',
-  FAILED: 'text-rose-500',
+  ACTIVE: 'text-orange-400',
+  COMPLETED: 'text-emerald-400',
+  FAILED: 'text-rose-400',
 };

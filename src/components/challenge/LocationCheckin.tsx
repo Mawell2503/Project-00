@@ -78,12 +78,12 @@ export default function LocationCheckin({
 
   if (isVerified) {
     return (
-      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-center gap-3">
-        <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+      <div className="bg-emerald-500/10 border border-emerald-500/25 rounded-xl p-3 flex items-center gap-3">
+        <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
         <div>
-          <p className="text-xs font-bold text-emerald-700">Location verified!</p>
+          <p className="text-xs font-bold text-emerald-300">Location verified!</p>
           {distance !== null && (
-            <p className="text-[10px] text-emerald-600">You're at the right spot ({distance}m)</p>
+            <p className="text-[10px] text-emerald-400/80">You're at the right spot ({distance}m)</p>
           )}
         </div>
       </div>
@@ -112,9 +112,9 @@ export default function LocationCheckin({
       </button>
 
       {error && (
-        <div className="bg-rose-50 border border-rose-200 rounded-xl p-3 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
-          <p className="text-[10px] text-rose-600">{error}</p>
+        <div className="bg-rose-500/10 border border-rose-500/25 rounded-xl p-3 flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+          <p className="text-[10px] text-rose-300">{error}</p>
         </div>
       )}
     </div>
